@@ -3,6 +3,7 @@ import fs from 'fs'
 import sizeOf from 'image-size'
 import { visit } from 'unist-util-visit'
 
+// @ts-ignore
 import type { Parent, Node, Literal } from 'unist'
 
 type ImageNode = Parent & {

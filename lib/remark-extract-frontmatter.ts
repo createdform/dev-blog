@@ -1,6 +1,8 @@
 import { load } from 'js-yaml'
 import { visit } from 'unist-util-visit'
 
+/* eslint-disable @typescript-eslint/ban-types */
+// @ts-ignore
 import type { Parent } from 'unist'
 import type { VFile } from 'vfile'
 

@@ -1,12 +1,11 @@
-//@ts-nocheck
 import { slug } from 'github-slugger'
 import { toString } from 'mdast-util-to-string'
 import { visit } from 'unist-util-visit'
 
-import type { Parent } from 'unist'
+//@ts-nocheck
 
 export default function remarkTocHeadings(options) {
-  return (tree: Parent) =>
+  return (tree: any) =>
     visit(tree, 'heading', (node) => {
       const textContent = toString(node)
       options.exportRef.push({
