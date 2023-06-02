@@ -1,17 +1,17 @@
 ---
-name: Tails Azimuth
-avatar: /static/images/avatar.png
-occupation: Professor of Atmospheric Science
-company: Stanford University
-email: address@yoursite.com
+name: Devin Reeks
+avatar: /static/images/devin.png
+occupation: Software Developer
+company: Fat Zebra
+email: managecreated@gmail.com
 twitter: https://twitter.com/Twitter
-linkedin: https://www.linkedin.com
-github: https://github.com
+linkedin: https://www.linkedin.com/in/devin-reeks-85aa92b3/
+github: https://github.com/createdform
 juejin: https://juejin.cn/
 ---
 
-Tails Azimuth is a professor of atmospheric sciences at the Stanford AI Lab. His research interests includes complexity modelling of tailwinds, headwinds and crosswinds.
+Devin is a software developer at a payment gateway company. He thoroughly enjoys working with React and TypeScript. He is also a big fan of functional programming and is always looking for ways to improve his code. When he is not coding, he is either playing video games or spending time with his family.
 
-He leads the clean energy group which develops 3D air pollution-climate models, writes differential equation solvers, and manufactures titanium plated air ballons. In his free time he bakes raspberry pi.
+```
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+```
