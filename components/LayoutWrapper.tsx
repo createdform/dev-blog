@@ -48,7 +48,6 @@ const LayoutWrapper = ({ children }: Props) => {
                 </Link>
               ))}
             </div>
-            <ThemeSwitch />
             <MobileNav />
           </div>
         </header>
