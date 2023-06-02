@@ -8,7 +8,7 @@ summary: 'In this part we will discuss the repository side of the pipeline. We w
 
 # Lets configure the repo side of the pipeline
 
-_Title_: repo configuration
+_Title_: repo configuration for codepipeline
 
 _Author_: Devin Reeks
 
@@ -18,16 +18,90 @@ _Language_: English
 
 Tired of manually deploying your code? Want to automate your deployment process? What does that mean? It means that you can push your code to a repository and have it run through a pipeline and automatically deployed to your server.
 
-A few weekends ago I decided to attend the Tanda Hackathon, here in Brisbane. It was an excellent opportunity to network, showcase ideas while having a few beers with like-minded people.It is here that I met an AWS solutions architect that inspired me to build a deployment pipeline. He was excellent and helped me get some of the way.
+A few weekends ago I decided to attend the Tanda Hackathon, here in Brisbane. It was an excellent opportunity to network, showcase ideas while having a few beers with like-minded people. It is here that I met an AWS solutions architect that inspired me to build a deployment pipeline. He was excellent and helped me get some of the way.
 
 The project we will deploy is a golang backend with a mongo database. The mongo database was chosen due to the anticipated need for fast read/writes at scale. You can of course use whatever you want :) this is just an example implementation with hopefully a few gotcha's along the way.
 
 There are two main parts to the dance. 1. adding the necessary build files to your repo and 2. setting up the AWS side:
 
-![image](https://dev-blog-v86e.vercel.app/static/images/moving-parts.png)
+![moving_parts](https://dev-blog-v86e.vercel.app/static/images/moving-parts.png)
 
-#### setting up the AWS side:
+#### Setting up the AWS side:
 
-This part of the article will focus on the repository side.  Important files you will need to add to your project:  buildspec.yml - this can be appropriately named (I called mine buildspec_release.yml) appspec.yml - this taps into the lifecycle hooks of the pipeline and allows use to define scripts  a folder with the necessary scripts to run on each lifecycle event (more on this later)
+This part of the article will focus on the repository side. Important files you will need to add to your project: buildspec.yml - this can be appropriately named (I called mine buildspec_release.yml) appspec.yml - this taps into the lifecycle hooks of the pipeline and allows use to define scripts  a folder with the necessary scripts to run on each lifecycle event (more on this later)
 
-Here is my buildspec.yml file. In here we can define how we would like our project to be built.  This was inspired by: https://github.com/dharnitski/golang-codebuild/blob/master/buildspec.yml
+Here is my buildspec.yml file. In here we can define how we would like our project to be built.  This was inspired by [sample buildspec](https://github.com/dharnitski/golang-codebuild/blob/master/buildspec.yml)
+
+---
+
+```
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo CODEBUILD_SRC_DIR - $CODEBUILD_SRC_DIR
+      - echo GOPATH - $GOPATH
+      - echo GOROOT - $GOROOT
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Getting packages
+      - go get ./...
+      - echo Compiling the Go code...
+      - env GOOS=linux GOARCH=arm64 go build -o server main.go
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION > commit_hash.txt
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - server
+    - appspec.yml
+    - scripts/*
+    - commit_hash.txt
+
+```
+
+Here is a base repo you can use if you like, feel free to use as a template for your next go project:
+
+Golang CodePipeline base project [template](https://github.com/createdform/created-server)
+
+In this buildspec.yml file we define our install, build and post build commands.
+
+## The install phase:
+
+In the install command we set the codebuild_src_directory using the available codebuild environment variable. This is mandatory, so that the codedeploy agent running in your EC2 will know where to find your build. For more information on codedeploy environment variables: [codedeploy environment variables](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html)
+
+I set the GOPATH and GOROOT because in the next phase I will build the binary. Feel free to skip that part if you’re doing a different sort of deployment.
+
+## The build phase:
+
+This runs the build. In here you may run npm run build (if you’re doing a javascript deployment) you could potentially put your lint and typescript checks here, or have them as a separate part of the build pipeline:- depending on your requirements.
+
+## Artifacts:
+
+One crucial aspect of the buildspec file is artifacting. In my buildspec, I include the binary that was built in the previous phase, the appspec.yml file from my repository, and all the necessary script files (which I'll discuss later). It's important to consider what your server will require to operate efficiently, and artifacting those elements is essential. For instance, static assets can be another example of artifacts that need to be included.
+
+This part may give you the most grief if not included. It’s a bit like writing an email and forgetting to attach the attachment — or more visually:
+
+![image](https://dev-blog-v86e.vercel.app/static/images/artifact-metaphor.png)
+
+## The appspec.yml file
+
+```
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /home
+
+hooks:
+  ApplicationStop:
+    - location: scripts/application_stop.sh
+      timeout: 300
+  ApplicationStart:
+    - location: scripts/application_start.sh
+      timeout: 300
+```
