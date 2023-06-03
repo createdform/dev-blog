@@ -32,15 +32,17 @@ const IntroCard = () => {
             doesn't count unless you <span className='underline'>deliver</span>)
             and golang (because its cool).
           </p>
-          <div className='flex justify-between items-center'>
-            <p className='mt-2 text-sm'>
-              Topics: AWS, Golang, CI/CD, git, clean code
-            </p>
-            {siteMetadata.newsletter.provider !== '' && (
-              <div className='flex items-center justify-center pt-4'>
-                <NewsletterForm />
-              </div>
-            )}
+          <div className='tags-container'>
+            <div className='flex flex-col justify-center'>
+              {siteMetadata.newsletter.provider !== '' && (
+                <div className='flex items-center justify-center pt-4 subscriber'>
+                  <NewsletterForm />
+                </div>
+              )}
+              <p className='mt-2 text-sm'>
+                Topics: AWS, Golang, CI/CD, git, clean code
+              </p>
+            </div>
           </div>
         </div>
       </div>
