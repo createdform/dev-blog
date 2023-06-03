@@ -30,7 +30,7 @@ To recap moving parts from the previous article:
 
 This is how the cloud components fit together:
 
-![aws_services](https://dev-blog-v86e.vercel.app/static/images/aws-aws_services.png)
+![aws services map](https://dev-blog-v86e.vercel.app/static/images/aws-services.png)
 
 The green ticked services are the ones we will cover in this part
 
@@ -57,3 +57,9 @@ I will select all actions, however, feel free to lock it down further. Secure co
 Add the policy to your role, give the role a meaningful name and description and then create it. Its from here we need to attach it to our EC2.
 
 Lets provision an EC2 instance. I am going to go with the smallest one I can get, with an AMI of the latest Ubuntu distro (pick your poison) on arm architecture. The solutions architect informed me this was a more efficient option.
+
+Create a new keypair login, create a security group too (should be the default) to allow ssh traffic (so you can ssh in to install the codedeploy agent). Then click “Launch Instance”.
+
+If you navigate back to the EC2 running instances, you should see the instance you just provisioned. It may take a minute or two to start up. In the interim I recommend clicking “actions” and modifying the IAM role. It is here where we can attach the IAM role we created in the previous step. The EC2 does not need to be restarted for the role to take effect. However, please note that if CodeDeploy agent is running on the EC2, the agent will need to be restarted.
+
+![EC2 instance setup](https://dev-blog-v86e.vercel.app/static/images/ec2-instances.png)
