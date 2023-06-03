@@ -1,14 +1,14 @@
 ---
 title: 'Automate your deployment with AWS CodePipeline - Part 3'
 date: '2023-06-04'
-tags: ['IAM', 'EC2', 'AWS']
+tags: ['CodePipeline', 'EC2', 'AWS']
 draft: false
 summary: 'In this part we will setup IAM roles and policies and setup our EC2 instance with necessary access'
 ---
 
-# Lets configure our IAM policies, roles and EC2 instance
+# Lets configure our CodePipeline and Connect to our Github
 
-_Title_: IAM policies, roles and EC2 instance
+_Title_: Connect Github to AWS CodePipeline
 
 _Author_: Devin Reeks
 
@@ -70,7 +70,7 @@ Ssh into your instance by clicking the connect button. Use either the inbuilt br
 
 in ubuntu we do this by running (don’t forget to switch in the correct region (I’m from Australia so I use ap-southeast-2):
 
-```
+```bash
 sudo su
 apt update
 apt install ruby wget
@@ -86,7 +86,7 @@ The above code gives your terminal sudo permissions, updates the package lists, 
 
 run:
 
-```
+```bash
 service codedeploy-agent status
 ```
 
