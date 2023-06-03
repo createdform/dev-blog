@@ -1,4 +1,6 @@
 import Image from '@/components/Image'
+import NewsletterForm from '@/components/NewsletterForm'
+import siteMetadata from '@/data/siteMetadata'
 
 const IntroCard = () => {
   return (
@@ -23,15 +25,23 @@ const IntroCard = () => {
             <span className='underline'>software developer</span> at a payment
             gateway company.
           </p>
+
           <p className='my-4 text-xl'>
             I typically develop software in Ruby on Rails and typescript/react.
             However, in my spare time I have a passion for devops (because it
             doesn't count unless you <span className='underline'>deliver</span>)
             and golang (because its cool).
           </p>
-          <p className='mt-2 text-sm'>
-            Topics: AWS, Golang, CI/CD, git, clean code
-          </p>
+          <div className='flex justify-between items-center'>
+            <p className='mt-2 text-sm'>
+              Topics: AWS, Golang, CI/CD, git, clean code
+            </p>
+            {siteMetadata.newsletter.provider !== '' && (
+              <div className='flex items-center justify-center pt-4'>
+                <NewsletterForm />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
