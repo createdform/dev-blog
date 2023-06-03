@@ -20,14 +20,14 @@ const IntroCard = () => {
             </h1>
           </div>
 
-          <p className='mt-2 text-2xl'>
+          <p className='mt-4 mb-3 text-2xl'>
             Hey, I'm Devin. I'm a{' '}
             <span className='underline'>software developer</span> at a payment
             gateway company.
           </p>
 
-          <p className='my-4 text-xl'>
-            I typically develop software in Ruby on Rails and typescript/react.
+          <p className='my-6 text-xl'>
+            I typically develop software in ruby on rails and typescript/react.
             However, in my spare time I have a passion for devops (because it
             doesn't count unless you <span className='underline'>deliver</span>)
             and golang (because its cool).

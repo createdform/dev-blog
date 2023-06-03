@@ -28,9 +28,9 @@ There are two main parts to the dance. 1. adding the necessary build files to yo
 
 #### Setting up the AWS side:
 
-This part of the article will focus on the repository side. Important files you will need to add to your project: buildspec.yml - this can be appropriately named (I called mine buildspec_release.yml) appspec.yml - this taps into the lifecycle hooks of the pipeline and allows use to define scripts  a folder with the necessary scripts to run on each lifecycle event (more on this later)
+This part of the article will focus on the repository side. Important files you will need to add to your project: buildspec.yml this can be appropriately named (I called mine buildspec_release.yml) appspec.yml - this taps into the lifecycle hooks of the pipeline and allows use to define scripts  a folder with the necessary scripts to run on each lifecycle event (more on this later)
 
-Here is my buildspec.yml file. In here we can define how we would like our project to be built.  This was inspired by [sample buildspec](https://github.com/dharnitski/golang-codebuild/blob/master/buildspec.yml)
+Here is my buildspec.yml file. In here we can define how we would like our project to be built. This was inspired by [sample buildspec](https://github.com/dharnitski/golang-codebuild/blob/master/buildspec.yml)
 
 ---
 
@@ -105,3 +105,76 @@ hooks:
     - location: scripts/application_start.sh
       timeout: 300
 ```
+
+in the appspec.yml file I define the files and the destination. The source points to my artifact files (which are stored in s3) and the destination is the folder I would like them to be copied to (inside the EC2). It is in the appspec file we can tap into the various lifecycle events that occur during deployment.
+
+## Scripts
+
+It is here where we can tap into the lifecycle events of the deployment process to start and stop our server. We could also tap into the lifecycle events to seed our database, health check external resources, etc.  The start script:
+
+```
+#!/bin/sh
+echo "application start"
+sudo nohup /home/server > /dev/null 2>&1 &
+```
+
+In here I am daemonizing my server and throwing away the output, I recommend logging your output more effectively.
+
+```
+#!/bin/sh
+echo "Stopping the application..."
+# Find the process IDs (PIDs) of the application
+app_pids=$(pgrep -f "/home/server")
+
+# Check if any application process is running
+if [ -n "$app_pids" ]; then
+  # Terminate each application process individually
+  for app_pid in $app_pids; do
+    sudo kill "$app_pid"
+  done
+  echo "Application stopped successfully."
+else
+  echo "Application is not running."
+fi
+
+```
+
+## Endpoints
+
+Don't forget to add a health check endpoint, codepipeline will need this for a successful pipeline run this is mine:
+
+```
+package controllers
+
+import (
+   "github.com/julienschmidt/httprouter"
+   "net/http"
+   "fmt"
+)
+
+func HealthCheck() httprouter.Handle {
+ return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+     w.WriteHeader(http.StatusOK)
+     fmt.Fprint(w, "Service is healthy")
+ }
+}
+
+```
+
+You can optionally add a verification endpoint to return the commit hash (I have included in the github template)
+
+```
+http.HandleFunc("/verify", func(w http.ResponseWriter, r *http.Request) {
+  body, err := ioutil.ReadFile("/home/commit_hash.txt")
+  if err != nil {
+   w.WriteHeader(http.StatusInternalServerError)
+   w.Write([]byte("unable to read file: " + err.Error()))
+   return
+  }
+  w.WriteHeader(http.StatusOK)
+  w.Write(body)
+ })
+
+```
+
+for more info on the [appspec file](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#appspec-hooks-server):
