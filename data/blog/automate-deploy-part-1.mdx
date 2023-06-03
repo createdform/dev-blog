@@ -34,7 +34,7 @@ Here is my buildspec.yml file. In here we can define how we would like our proje
 
 ---
 
-```
+```yaml
 version: 0.2
 
 phases:
@@ -60,7 +60,6 @@ artifacts:
     - appspec.yml
     - scripts/*
     - commit_hash.txt
-
 ```
 
 Here is a base repo you can use if you like, feel free to use as a template for your next go project:
@@ -89,7 +88,7 @@ This part may give you the most grief if not included. It’s a bit like writing
 
 ## The appspec.yml file
 
-```
+```yaml
 version: 0.0
 os: linux
 
@@ -106,13 +105,13 @@ hooks:
       timeout: 300
 ```
 
-in the appspec.yml file I define the files and the destination. The source points to my artifact files (which are stored in s3) and the destination is the folder I would like them to be copied to (inside the EC2). It is in the appspec file we can tap into the various lifecycle events that occur during deployment.
+Within the appspec.yml file, I specify both the source and destination of files. The source refers to my artifact files, which are stored in an S3 bucket, while the destination indicates the desired folder within the EC2 instance where I want these files to be copied. The appspec file enables us to access and utilize the different lifecycle events that take place during deployment.
 
 ## Scripts
 
 It is here where we can tap into the lifecycle events of the deployment process to start and stop our server. We could also tap into the lifecycle events to seed our database, health check external resources, etc.  The start script:
 
-```
+```bash
 #!/bin/sh
 echo "application start"
 sudo nohup /home/server > /dev/null 2>&1 &
@@ -120,7 +119,7 @@ sudo nohup /home/server > /dev/null 2>&1 &
 
 In here I am daemonizing my server and throwing away the output, I recommend logging your output more effectively.
 
-```
+```bash
 #!/bin/sh
 echo "Stopping the application..."
 # Find the process IDs (PIDs) of the application
@@ -136,14 +135,13 @@ if [ -n "$app_pids" ]; then
 else
   echo "Application is not running."
 fi
-
 ```
 
 ## Endpoints
 
 Don't forget to add a health check endpoint, codepipeline will need this for a successful pipeline run this is mine:
 
-```
+```go
 package controllers
 
 import (
@@ -158,12 +156,11 @@ func HealthCheck() httprouter.Handle {
      fmt.Fprint(w, "Service is healthy")
  }
 }
-
 ```
 
 You can optionally add a verification endpoint to return the commit hash (I have included in the github template)
 
-```
+```go
 http.HandleFunc("/verify", func(w http.ResponseWriter, r *http.Request) {
   body, err := ioutil.ReadFile("/home/commit_hash.txt")
   if err != nil {
@@ -174,7 +171,6 @@ http.HandleFunc("/verify", func(w http.ResponseWriter, r *http.Request) {
   w.WriteHeader(http.StatusOK)
   w.Write(body)
  })
-
 ```
 
 for more info on the [appspec file](https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html#appspec-hooks-server):

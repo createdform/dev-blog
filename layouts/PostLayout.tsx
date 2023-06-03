@@ -123,6 +123,30 @@ export default function PostLayout({
             <div className='divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0'>
               <div className='prose max-w-none pt-10 pb-8 dark:prose-dark'>
                 {children}
+                {(next || prev) && (
+                  <div className='flex justify-between py-4 xl:block xl:space-y-8 xl:py-8'>
+                    {prev && (
+                      <div>
+                        <h2 className='text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400'>
+                          Previous Article
+                        </h2>
+                        <div className='text-primary-500 hover:text-primary-600 dark:hover:text-primary-400'>
+                          <Link href={`/blog/${prev.slug}`}>{prev.title}</Link>
+                        </div>
+                      </div>
+                    )}
+                    {next && (
+                      <div>
+                        <h2 className='text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400'>
+                          Next Article
+                        </h2>
+                        <div className='text-primary-500 hover:text-primary-600 dark:hover:text-primary-400'>
+                          <Link href={`/blog/${next.slug}`}>{next.title}</Link>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
               <div className='pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300'>
                 <Link href={siteMetadata.github}>{'View on GitHub'}</Link>
