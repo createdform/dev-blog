@@ -1,0 +1,166 @@
+---
+title: 'Automate your deployment with AWS CodePipeline - Part 4'
+date: '2023-06-05'
+tags:
+  [
+    'Amazon Secrets Manager',
+    'DocumentDB',
+    'Target Group',
+    'Application Load Balancer',
+    'AWS',
+  ]
+draft: false
+summary: 'In this part we will configure our Amazon DocumentDB, application load balancer, target group and secret manager'
+---
+
+# Expose your EC2 service to the internet with an Application Load Balancer
+
+_Title_: Setup your Database, Load Balancer, Target Group and Secret Manager
+
+_Author_: Devin Reeks
+
+_Language_: English
+
+In this part we will take a look at the green ticked AWS services in the diagram
+
+![part 4 summary](https://dev-blog-v86e.vercel.app/static/images/part-4-summary.png)
+
+## DocumentDB
+
+Let’s start with DocumentDB. Create your database and collect your TLS certificate. We will need to reference that in the database connection string. I downloaded mine and checked it into my github repo.
+
+![Document db console](https://dev-blog-v86e.vercel.app/static/images/documentdb-setup.png)
+
+This is how the cloud components fit together:
+
+![aws services map](https://dev-blog-v86e.vercel.app/static/images/aws-services.png)
+
+## Secret Manager
+
+The connection string — which includes the username + password can now be stored in the AWS secrets manager:
+
+![store connection string](https://dev-blog-v86e.vercel.app/static/images/secret-manager.png)
+
+Input the necessary username and password and store the secret. In the last step the console will output code for us to access the secret
+
+```go
+package db
+
+import (
+ "context"
+ "fmt"
+ "log"
+ "go.mongodb.org/mongo-driver/mongo"
+ "os"
+ "github.com/aws/aws-sdk-go-v2/aws"
+ "github.com/aws/aws-sdk-go-v2/config"
+ "github.com/aws/aws-sdk-go-v2/service/secretsmanager"
+ "github.com/joho/godotenv"
+ "go.mongodb.org/mongo-driver/mongo/options"
+)
+
+type DbConnection struct {
+  connection *mongo.Client
+}
+
+func getSecretFromSecretsManager(secretName, region string) string {
+ config, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion(region))
+ if err != nil {
+  log.Fatal("Error loading AWS configuration:", err)
+ }
+
+ // Create Secrets Manager client
+ svc := secretsmanager.NewFromConfig(config)
+
+ input := &secretsmanager.GetSecretValueInput{
+  SecretId:     aws.String(secretName),
+  VersionStage: aws.String("AWSCURRENT"),
+ }
+
+ result, err := svc.GetSecretValue(context.TODO(), input)
+ if err != nil {
+  log.Fatal("Error retrieving secret from Secrets Manager:", err)
+ }
+
+ // Decrypts secret using the associated KMS key.
+ secretString := *result.SecretString
+ return secretString
+}
+
+func goDotEnvVariable(key string) string {
+
+ secretName := "MONGO_PROD_URL"
+ region := "ap-southeast-2"
+
+ err := godotenv.Load(".env")
+ if err != nil {
+  log.Println("Error loading .env file:", err)
+  // Load from Secrets Manager if .env file is not found
+  envValue := getSecretFromSecretsManager(secretName, region)
+  log.Println("Loaded from Secrets Manager:", envValue)
+  return envValue
+ }
+  return os.Getenv(key)
+}
+
+// Hello returns a greeting for the named person.
+func Connect() (*mongo.Client, error) {
+ // Set client options
+  mongoUrl := goDotEnvVariable("MONGODB_URL")
+
+  fmt.Println("mongoUrl: ", mongoUrl)
+  clientOptions := options.Client().ApplyURI(mongoUrl)
+
+
+ // Connect to MongoDB
+ client, err := mongo.Connect(context.TODO(), clientOptions)
+ if err != nil {
+  log.Fatal(err)
+ }
+
+ // Check the connection
+ err = client.Ping(context.Background(), nil)
+ if err != nil {
+  log.Fatal(err)
+ }
+
+ fmt.Println("Connected to MongoDB!")
+
+ return client, nil
+}
+
+```
+
+This is my code. It either reads my local .env file to connect to my local mongo instance, or in its absence it reads from the secret manager.
+
+---
+
+## Application Load Balancer and target group
+
+Navigate back to EC2 dashboard
+
+![load balancer](https://dev-blog-v86e.vercel.app/static/images/load-balancer.png)
+
+In here we need to create a target group and configure our load balancer.
+
+Lets configure the target group first:
+
+![target group config](https://dev-blog-v86e.vercel.app/static/images/health-check.png)
+
+Don’t forget to include the url for your health check, that we created in [part 1]("https://dev-blog-v86e.vercel.app/blog/automate-deploy-part-1"). It simply hits the service and the service should return a 200 status.
+
+Next we create our load balancer. It needs to point to our target group.
+
+![target group config](https://dev-blog-v86e.vercel.app/static/images/target-groups.png)
+
+Ensure you’ve set the correct security group, and have it internet facing. This is what the codepipeline will hit on the allowtraffic event step.
+
+![pipeline events](https://dev-blog-v86e.vercel.app/static/images/pipeline-events.png)
+
+Don’t forget to update your EC2 instance security group to allow Custom TCP with a port of 80.
+
+![security groups ec2](https://dev-blog-v86e.vercel.app/static/images/security-groups-ec2.png)
+
+Thats it. I may have missed some details here and there. However, this is the overall architecture for a fully automated pipeline. Feel free to hit me up on linkedin for a chat :)
+
+[linkedin](https://www.linkedin.com/in/devin-reeks-85aa92b3/)

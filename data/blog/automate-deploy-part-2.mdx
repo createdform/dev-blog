@@ -48,8 +48,8 @@ To do this, we create a role:
 
 As we are going to give this role to the EC2, select EC2. Clicking next will take you to the “Add permissions” screen. Its in here where we can select either an AWS manged policy (feel free to give full admin access, but do so cautiously, for spike testing purposes only) or for better practices to create a custom policy. In this custom policy I will give my EC2 access to:
 
-- S3
-- DocumentDB Elastic Clusters
+- Amazon S3
+- Amazon DocumentDB Elastic Clusters
 - CodeDeploy
 
 I will select all actions, however, feel free to lock it down further. Secure code is all about least permissions necessary to perform the task.
