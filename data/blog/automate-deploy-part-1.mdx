@@ -70,7 +70,7 @@ In this buildspec.yml file we define our install, build and post build commands.
 
 ## The install phase:
 
-In the install command we set the codebuild_src_directory using the available codebuild environment variable. This is mandatory, so that the codedeploy agent running in your EC2 will know where to find your build. For more information on codedeploy environment variables: [codedeploy environment variables](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html)
+In the install command we set the codebuild_src_directory using the available CodeBuild environment variable. This is mandatory, so that the codedeploy agent running in your EC2 will know where to find your build. For more information on CodeDeploy environment variables: [codedeploy environment variables](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html)
 
 I set the GOPATH and GOROOT because in the next phase I will build the binary. Feel free to skip that part if you’re doing a different sort of deployment.
 
