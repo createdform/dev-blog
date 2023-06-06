@@ -6,14 +6,15 @@ const siteMetadata = {
   language: 'en-us',
   theme: 'dark', // system, dark or light
   siteUrl: 'https://devinreeks.com',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteRepo: 'https://github.com/createdform/dev-blog',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/social-image.jpg',
   email: 'address@yoursite.com',
   github: 'https://github.com/createdform/created-server',
   juejin: 'https://juejin.cn/',
-  twitter: 'https://dev-blog-six-rho.vercel.app/static/images/social-image.png',
+  twitter:
+    'https://github.com/createdform/dev-blog/static/images/social-image.png',
   facebook: 'https://facebook.com',
   youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com/in/devin-reeks-85aa92b3/',
