@@ -3,7 +3,7 @@ title: 'Automate your deployment with AWS CodePipeline - Part 3'
 date: '2023-06-04'
 tags: ['CodePipeline', 'EC2', 'AWS']
 draft: false
-summary: 'In this part we will setup IAM roles and policies and setup our EC2 instance with necessary access'
+summary: 'In this part we setup the CodePipeline'
 ---
 
 # Lets configure our CodePipeline and Connect to our Github
@@ -16,82 +16,28 @@ _Language_: English
 
 ##
 
-Security is important, particularly when using AWS products. Its extremely easy to become the target of a malicious attack if you don't take the necessary precautions and to rack up an unexpectedly large bill.
+![part 3 summary](https://dev-blog-v86e.vercel.app/static/images/part-3-summary.png)
 
-In this article we will setup our IAM policies and roles, and configure our EC2 instance with the necessary access.
+The services with the green dots are covered in the previous part and the services with ticks are what we will cover in this part. Navigate to CodePipeline and select "Create Pipeline"
 
-feel free to give full admin permissions on a root user account, or more visually:
+![aws codepipeline menu](https://dev-blog-v86e.vercel.app/static/images/codepipeline-menu.png)
 
-![safety first](https://dev-blog-v86e.vercel.app/static/images/safety-first.png)
+Ensure your code is versioned in a repository, I chose to use GitHub. I find it kind of interesting that GitLab does not have an integration, but BitBucket does?? ok.
 
-To recap moving parts from the previous article:
+![possible source repositories](https://dev-blog-v86e.vercel.app/static/images/codepipeline-menu.png)
 
-![moving_parts](https://dev-blog-v86e.vercel.app/static/images/moving-parts.png)
+Follow the steps and connect your repository.
 
-This is how the cloud components fit together:
+![add build stage](https://dev-blog-v86e.vercel.app/static/images/add-build-stage.png)
 
-![aws services map](https://dev-blog-v86e.vercel.app/static/images/aws-services.png)
+In the add build stage, click create project. A window will open:
 
-The green ticked services are the ones we will cover in this part
+![create stage](https://dev-blog-v86e.vercel.app/static/images/create-build-stage.png)
 
-Lets start with permissions:
+Do not restrict the number of concurrent builds. I found that my build step would fail. It seems there is a bit of overlap between pulling the code from the source repository and running the build, and I would have to manually run the build step, which is antithetical to the purpose of this article:- to automate the pipeline.
 
-## IAM Policies & Roles
+![set build spec file](https://dev-blog-v86e.vercel.app/static/images/set-build-spec-file.png)
 
-navigate to the IAM dashboard in the [AWS console](https://us-east-1.console.aws.amazon.com/iamv2/home?region=ap-southeast-2#/roles)
+In the same build window we need to point to the buildspec file we created in part 1. I named mine: "buildspec_release.yml - most of the config is default, however customise to your use case as you see fit.
 
-It is in here where we create the role necessary for the EC2 to access the various services we will interact with. IAM allows you give full admin access to a service- or to drill down to the services and interactions with those services. It can be extremely granular. However, for the sake of this article, I will grant all permissions on the resources we are using.
-
-To do this, we create a role:
-
-![iam entrusted entity](https://dev-blog-v86e.vercel.app/static/images/iam-entrusted-entity.png)
-
-As we are going to give this role to the EC2, select EC2. Clicking next will take you to the “Add permissions” screen. Its in here where we can select either an AWS manged policy (feel free to give full admin access, but do so cautiously, for spike testing purposes only) or for better practices to create a custom policy. In this custom policy I will give my EC2 access to:
-
-- S3
-- DocumentDB Elastic Clusters
-- CodeDeploy
-
-I will select all actions, however, feel free to lock it down further. Secure code is all about least permissions necessary to perform the task.
-
-Add the policy to your role, give the role a meaningful name and description and then create it. Its from here we need to attach it to our EC2.
-
-Lets provision an EC2 instance. I am going to go with the smallest one I can get, with an AMI of the latest Ubuntu distro (pick your poison) on arm architecture. The solutions architect informed me this was a more efficient option.
-
-Create a new keypair login, create a security group too (should be the default) to allow ssh traffic (so you can ssh in to install the codedeploy agent). Then click “Launch Instance”.
-
-If you navigate back to the EC2 running instances, you should see the instance you just provisioned. It may take a minute or two to start up. In the interim I recommend clicking “actions” and modifying the IAM role. It is here where we can attach the IAM role we created in the previous step. The EC2 does not need to be restarted for the role to take effect. However, please note that if CodeDeploy agent is running on the EC2, the agent will need to be restarted.
-
-![EC2 instance setup](https://dev-blog-v86e.vercel.app/static/images/ec2-instances.png)
-
-## Connect to your instance & install codedeploy agent
-
-Ssh into your instance by clicking the connect button. Use either the inbuilt browser console or AWS also give instructions in the same panel to ssh from your local console.
-
-in ubuntu we do this by running (don’t forget to switch in the correct region (I’m from Australia so I use ap-southeast-2):
-
-```bash
-sudo su
-apt update
-apt install ruby wget
-cd /tmp
-wget https://aws-codedeploy-<region>.s3.amazonaws.com/latest/install
-chmod +x ./install
-./install auto
-service codedeploy-agent start
-systemctl enable codedeploy-agent
-```
-
-The above code gives your terminal sudo permissions, updates the package lists, installs ruby, opens tmp folder and installs the codedeploy agent. It then gives executable permissions to the install file and runs the agent and enables it to be run on boot.
-
-run:
-
-```bash
-service codedeploy-agent status
-```
-
-to view the agents status. It should say something along the lines of:
-
-![code build agent confirmation of service](https://dev-blog-v86e.vercel.app/static/images/codebuild-agent.png)
-
-We can now configure our pipeline, lets do so in the next part.
+In the next part we will configure the DocumentDB, secrets manager, application load balancer and target group.
