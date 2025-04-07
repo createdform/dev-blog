@@ -8,20 +8,21 @@ const IntroCard = () => {
       <div className='flex'>
         <div className='flex flex-col'>
           <div className='flex items-center gap-4'>
-            <Image
-              alt='devin reeks'
-              src='/static/images/devin.png'
-              className='rounded-full'
-              width={200}
-              height={200}
-            />
+            <div className='h-[200px] w-[200px] overflow-hidden rounded-full'>
+              <Image
+                alt='devin reeks'
+                src='/static/images/devin.png'
+                width={200}
+                height={200}
+              />
+            </div>
             <div className='flex flex-col items-center gap-2'>
               <h1 className='text-6xl font-extrabold font-extrabold leading-14'>
                 Devin Reeks
               </h1>
               <Image
                 alt='underline'
-                src='/static/images/underline.svg'
+                src='/static/images/Underline.svg'
                 width={390}
                 height={25}
               />
@@ -40,14 +41,16 @@ const IntroCard = () => {
             doesn't count unless you <span className='underline'>deliver</span>)
             and golang (because its cool).
           </p>
-          <div className='tags-container'>
-            <Image
-              src='/static/images/cta-arrow.svg'
-              alt='cta'
-              width={210}
-              height={120}
-            />
-            <div className='flex flex-col justify-center'>
+          <div className='tags-container w-full'>
+            <div className='mr-8 mt-2'>
+              <Image
+                src='/static/images/cta-arrow.svg'
+                alt='cta'
+                width={200}
+                height={100}
+              />
+            </div>
+            <div className='mb-8 flex flex-col justify-center'>
               {siteMetadata.newsletter.provider !== '' && (
                 <div className='subscriber flex items-center justify-center pt-4'>
                   <NewsletterForm />

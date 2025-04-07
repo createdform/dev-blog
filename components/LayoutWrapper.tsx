@@ -59,7 +59,7 @@ const LayoutWrapper = ({ children }: Props) => {
                       className='translate-x- absolute -bottom-3 left-1/2 overflow-visible'
                       style={{
                         width: '80px',
-                        height: '115px',
+                        height: '70px',
                         transform: 'translate(-50%, 0)',
                       }}
                     >
@@ -79,7 +79,6 @@ const LayoutWrapper = ({ children }: Props) => {
                 </Link>
               ))}
             </div>
-            <div>hello</div>
             <MobileNav />
           </div>
         </header>
