@@ -9,7 +9,7 @@ const ContentSecurityPolicy = `
   script-src 'self' 'unsafe-eval' 'unsafe-inline' https://maps.googleapis.com giscus.app;
   object-src 'none';
   style-src 'self' 'unsafe-inline';
-  img-src * blob: data:;
+  img-src * blob: data: https://*.devinreeks.com https://devinreeks.com;
   media-src 'none';
   connect-src *;
   font-src 'self';
@@ -56,6 +56,9 @@ const nextConfig = {
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   eslint: {
     dirs: ['pages', 'components', 'lib', 'layouts', 'scripts'],
+  },
+  images: {
+    domains: ['*.devinreeks.com', 'devinreeks.com'],
   },
   async headers() {
     return [
