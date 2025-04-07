@@ -1,6 +1,6 @@
 ---
 name: Devin Reeks
-avatar: /static/images/Devin.png
+avatar: /static/images/devin.png
 occupation: Software Developer
 company: Fat Zebra
 email: managecreated@gmail.com
