@@ -8,23 +8,23 @@ const IntroCard = () => {
       <div className='flex'>
         <div className='flex flex-col'>
           <div className='flex items-center gap-4'>
-            <Image
+            {/* <Image
               alt='devin reeks'
               src='/static/images/devin.png'
               className='rounded-full'
               width={200}
               height={200}
-            />
+            /> */}
             <div className='flex flex-col items-center gap-2'>
               <h1 className='text-6xl font-extrabold font-extrabold leading-14'>
                 Devin Reeks
               </h1>
-              <Image
+              {/* <Image
                 alt='underline'
                 src='/static/images/underline.svg'
                 width={390}
                 height={25}
-              />
+              /> */}
             </div>
           </div>
 
@@ -41,12 +41,12 @@ const IntroCard = () => {
             and golang (because its cool).
           </p>
           <div className='tags-container'>
-            <Image
+            {/* <Image
               src='/static/images/cta-arrow.svg'
               alt='cta'
               width={210}
               height={120}
-            />
+            /> */}
             <div className='flex flex-col justify-center'>
               {siteMetadata.newsletter.provider !== '' && (
                 <div className='subscriber flex items-center justify-center pt-4'>
