@@ -32,7 +32,7 @@ const IntroCard = () => {
           <p className='mb-3 mt-4 text-2xl'>
             Hey, I'm Devin. I'm a{' '}
             <span className='underline'>software developer</span> at a payment
-            gateway company.
+            company.
           </p>
 
           <p className='my-6 text-xl'>
