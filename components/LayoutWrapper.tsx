@@ -18,8 +18,8 @@ interface Props {
 }
 
 const LayoutWrapper = ({ children }: Props) => {
-  const router = useRouter()
-  const currentPath = router.asPath
+  // const router = useRouter()
+  // const currentPath = router.asPath
 
   return (
     <SectionContainer>
@@ -42,7 +42,7 @@ const LayoutWrapper = ({ children }: Props) => {
             </Link>
           </div>
           <div className='flex items-center text-lg leading-5'>
-            <div className='hidden sm:block'>
+            {/* <div className='hidden sm:block'>
               {headerNavLinks.map((link) => (
                 <Link
                   key={link.title}
@@ -78,7 +78,8 @@ const LayoutWrapper = ({ children }: Props) => {
                   )}
                 </Link>
               ))}
-            </div>
+            </div> */}
+            <div>hello</div>
             <MobileNav />
           </div>
         </header>
