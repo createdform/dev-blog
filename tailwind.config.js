@@ -13,6 +13,21 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
+    fontSize: {
+      xs: ['0.625rem', { lineHeight: '0.75rem' }],
+      sm: ['0.6875rem', { lineHeight: '1rem' }],
+      base: ['0.75rem', { lineHeight: '1.125rem' }],
+      lg: ['0.875rem', { lineHeight: '1.25rem' }],
+      xl: ['1rem', { lineHeight: '1.5rem' }],
+      '2xl': ['1.125rem', { lineHeight: '1.75rem' }],
+      '3xl': ['1.5rem', { lineHeight: '2rem' }],
+      '4xl': ['1.875rem', { lineHeight: '2.25rem' }],
+      '5xl': ['2.25rem', { lineHeight: '1' }],
+      '6xl': ['3rem', { lineHeight: '1' }],
+      '7xl': ['3.75rem', { lineHeight: '1' }],
+      '8xl': ['4.5rem', { lineHeight: '1' }],
+      '9xl': ['6rem', { lineHeight: '1' }],
+    },
     extend: {
       spacing: {
         '9/16': '56.25%',

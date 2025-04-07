@@ -26,6 +26,7 @@ input:-webkit-autofill:focus {
 
 .tags-container {
   display: flex;
-  justify-content: center;
+  gap: 10px;
   align-items: center;
+  justify-content: flex-start;
 }
