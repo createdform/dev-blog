@@ -77,7 +77,7 @@ export default function PostLayout({
             className='divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0'
             style={{ gridTemplateRows: 'auto 1fr' }}
           >
-            <dl className='pt-6 pb-10 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700'>
+            <dl className='pb-10 pt-6 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700'>
               <dt className='sr-only'>Authors</dt>
               <dd>
                 <ul className='flex justify-center space-x-8 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8'>
@@ -89,8 +89,8 @@ export default function PostLayout({
                       {author.avatar && (
                         <Image
                           src={author.avatar}
-                          width='38px'
-                          height='38px'
+                          width={38}
+                          height={38}
                           alt='avatar'
                           className='h-10 w-10 rounded-full'
                         />
@@ -121,7 +121,7 @@ export default function PostLayout({
               </dd>
             </dl>
             <div className='divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0'>
-              <div className='prose max-w-none pt-10 pb-8 dark:prose-dark'>
+              <div className='prose max-w-none pb-8 pt-10 dark:prose-dark'>
                 {children}
                 {(next || prev) && (
                   <div className='flex justify-between py-4 xl:block xl:space-y-8 xl:py-8'>
@@ -148,7 +148,7 @@ export default function PostLayout({
                   </div>
                 )}
               </div>
-              <div className='pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300'>
+              <div className='pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300'>
                 <Link href={siteMetadata.github}>{'View on GitHub'}</Link>
               </div>
               <Comments frontMatter={frontMatter} />

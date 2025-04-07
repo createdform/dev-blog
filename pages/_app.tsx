@@ -1,7 +1,7 @@
 import '@fontsource/inter/variable-full.css'
 import 'katex/dist/katex.css'
 import Head from 'next/head'
-import { ThemeProvider } from 'next-themes'
+import { ThemeProvider, type ThemeProviderProps } from 'next-themes'
 
 import { ClientReload } from '@/components/ClientReload'
 import LayoutWrapper from '@/components/LayoutWrapper'
@@ -17,7 +17,12 @@ const isSocket = process.env.SOCKET
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider attribute='class' defaultTheme={siteMetadata.theme}>
+    <ThemeProvider
+      {...({
+        attribute: 'class',
+        defaultTheme: siteMetadata.theme,
+      } as ThemeProviderProps)}
+    >
       <Head>
         <meta content='width=device-width, initial-scale=1' name='viewport' />
       </Head>
