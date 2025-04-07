@@ -1,7 +1,7 @@
 import '@fontsource/inter/variable-full.css'
 import 'katex/dist/katex.css'
-import { ThemeProvider } from 'next-themes'
 import Head from 'next/head'
+import { ThemeProvider } from 'next-themes'
 
 import { ClientReload } from '@/components/ClientReload'
 import LayoutWrapper from '@/components/LayoutWrapper'
