@@ -10,7 +10,7 @@ const IntroCard = () => {
           <div className='flex items-center gap-4'>
             <Image
               alt='devin reeks'
-              src='/static/images/Devin.png'
+              src='/static/images/devin.png'
               className='rounded-full'
               width={200}
               height={200}
