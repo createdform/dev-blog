@@ -6,17 +6,16 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app;
-  script-src-element 'self' 'unsafe-eval' 'unsafe-inline' giscus.app;
-  script-src 'self' 'unsafe-eval' https://maps.googleapis.com 'unsafe-inline'; object-src 'self';
-  script-src-element 'self' 'unsafe-eval' https://maps.googleapis.com 'unsafe-inline'; object-src 'self';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://maps.googleapis.com giscus.app;
+  object-src 'none';
   style-src 'self' 'unsafe-inline';
   img-src * blob: data:;
   media-src 'none';
   connect-src *;
   font-src 'self';
-  frame-src giscus.app
+  frame-src giscus.app;
 `
+
 
 const securityHeaders = [
   {
