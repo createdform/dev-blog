@@ -6,7 +6,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://maps.googleapis.com giscus.app;
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://maps.googleapis.com giscus.app https://www.googletagmanager.com;
   object-src 'none';
   style-src 'self' 'unsafe-inline';
   img-src * blob: data: https://*.devinreeks.com https://devinreeks.com;
