@@ -1,0 +1,108 @@
+---
+title: '🖥️ Run Your Own Cloud — Apps, Sites, Services in Minutes - Part 2'
+date: '2025-04-13'
+tags:
+  [
+    'platform as service',
+    'docker',
+    'self-hosting',
+    'linux',
+    'vm',
+    'mac mini',
+    'spare box',
+  ]
+draft: true
+summary: 'Caprover enables us to self host applications at the click of a button and our own projects too!'
+---
+
+# Spinning up caprover locally
+
+_Title_: Run Caprover in a linux vm on a mac mini! or any box you have lying around :)
+
+_Author_: Devin Reeks
+
+_Language_: English
+
+## The power of caprover
+
+✅ CapRover can be used to run a private cloud
+
+Install apps like Nextcloud, Vaultwarden, PhotoPrism, Calibre, etc.
+
+You're essentially building a private alternative to Google Workspace, Dropbox, iCloud, etc.
+
+💪 But CapRover is more than that:
+
+⚙️ App hosting platform – run full-stack apps, APIs, websites
+
+🚀 One-click apps – instant deployment of 100+ prebuilt apps
+
+🔄 CI/CD-ready – deploy from GitHub, GitLab, or Docker builds
+
+📦 Docker under the hood – advanced users can customize anything / standard users can deploy pre-built applications
+
+🔧 Load balancing & scaling – baked in with Docker Swarm
+
+Scared, sick or tired of paying those AWS bills? Ever pushed a full stack application to vercel? https://vercel.com/ and wondered: "Gee I hope I don't get pwn'd by bots?"
+
+<iframe
+  width='560'
+  height='315'
+  src='https://www.youtube.com/embed/SCIfWhAheVw?si=7D0pvi39jPK2wBEY'
+  title='YouTube video player'
+  frameborder='0'
+  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+  referrerpolicy='strict-origin-when-cross-origin'
+  allowfullscreen
+></iframe>
+
+Why not self host? I don't mean localhost. I mean full blown:
+
+```
+ https://<my-app-name>.<my-custom-domain-name>.com
+```
+
+For this we can use Caprover.
+
+CapRover is like having your own mini-Heroku or AWS, but completely free and self-hosted! It's a Platform as a Service (PaaS) that makes deploying and managing your applications super stupid simple.
+
+There are two options for hosting caprover
+
+🔵 1. In the cloud. 🔴 2. Locally.
+
+Option 2 is a bit more complex but worth it if you have a mac mini, or spare box lying around. This tutorial will be done on a mac, however, much of it is still applicable.
+
+Minimum specs:
+
+🍪 <strong><u>CPU Architecture:</u></strong> CapRover source code is compatible with any CPU architecture and the Docker build available on Docker Hub is built for AMD64 (X86), ARM64, and ARMV7 CPUs.
+
+🤖 <strong><u>Recommended Stack:</u></strong> CapRover is tested on Ubuntu 22.04 and Docker 19.03. If you're using CapRover on a different OS, you might want to look at Docker Docs.
+
+🐧 <strong><u>Ubuntu 24.04:</u></strong> This version has been tested by multiple people and there seems to be no known issues with this version.
+
+🧠 <strong><u>Minimum RAM:</u></strong> Note that the build process sometimes consumes too much RAM, and 512MB RAM might not be enough (see this issue). Most providers offer a minimum of 1GB RAM on $5 instance including DigitalOcean, Vultr, Scaleway, Linode, SSD Nodes and etc.
+
+## So I ask you
+
+<div style={{ width: '260px', maxWidth: '100%' }}>
+  <div style={{ height: 0, paddingBottom: '54.23%', position: 'relative' }}>
+    <iframe
+      width='260'
+      height='141'
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+      }}
+      frameBorder='0'
+      src='https://imgflip.com/embed/9qo3zx'
+    ></iframe>
+  </div>
+  <p>
+    <a href='https://imgflip.com/gif/9qo3zx'>via Imgflip</a>
+  </p>
+</div>
+
+---

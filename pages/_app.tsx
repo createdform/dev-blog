@@ -25,6 +25,10 @@ export default function App({ Component, pageProps }: AppProps) {
     >
       <Head>
         <meta content='width=device-width, initial-scale=1' name='viewport' />
+        <meta
+          name='impact-site-verification'
+          value='33073b86-12c4-4176-ab8f-1d4490dae6dd'
+        ></meta>
       </Head>
       {isDevelopment && isSocket && <ClientReload />}
       <Analytics />
