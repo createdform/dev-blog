@@ -34,12 +34,14 @@ export default function Blog({
         title={`Blog - ${siteMetadata.author}`}
         description={siteMetadata.description}
       />
-      <ListLayout
-        posts={posts}
-        initialDisplayPosts={initialDisplayPosts}
-        pagination={pagination}
-        title='All Posts'
-      />
+      <div className='mx-auto max-w-md px-4 sm:max-w-xl sm:px-6 md:max-w-2xl lg:max-w-3xl'>
+        <ListLayout
+          posts={posts}
+          initialDisplayPosts={initialDisplayPosts}
+          pagination={pagination}
+          title='All Posts'
+        />
+      </div>
     </>
   )
 }
