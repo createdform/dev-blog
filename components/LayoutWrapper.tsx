@@ -20,7 +20,8 @@ interface Props {
 const LayoutWrapper = ({ children }: Props) => {
   const router = useRouter()
   const currentPath = router.asPath
-
+  const isBlogPost = currentPath.startsWith('/blog/') && currentPath !== '/blog'
+  console.log(currentPath.includes('/blog'))
   return (
     <SectionContainer>
       <div className='flex h-screen flex-col justify-between'>
@@ -48,13 +49,15 @@ const LayoutWrapper = ({ children }: Props) => {
                   key={link.title}
                   href={link.href}
                   className={`relative p-1 font-medium sm:p-4 ${
-                    currentPath === link.href
+                    currentPath === link.href ||
+                    (link.href === '/blog' && isBlogPost)
                       ? 'text-[#00C764]'
                       : 'text-gray-900 dark:text-gray-100'
                   }`}
                 >
                   {link.title}
-                  {currentPath === link.href && (
+                  {currentPath === link.href ||
+                  (link.href === '/blog' && isBlogPost) ? (
                     <div
                       className='translate-x- absolute -bottom-3 left-1/2 overflow-visible'
                       style={{
@@ -75,6 +78,8 @@ const LayoutWrapper = ({ children }: Props) => {
                         }}
                       />
                     </div>
+                  ) : (
+                    <></>
                   )}
                 </Link>
               ))}
