@@ -13,7 +13,7 @@ const ContentSecurityPolicy = `
   media-src 'none';
   connect-src *;
   font-src 'self';
-  frame-src giscus.app https://imgflip.com https://giphy.com https://www.youtube.com https://www.youtube-nocookie.com;
+  frame-src giscus.app https://imgflip.com https://media.giphy.com https://www.youtube.com https://www.youtube-nocookie.com;
 `;
 
 
