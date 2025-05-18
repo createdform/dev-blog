@@ -15,7 +15,7 @@ draft: false
 summary: 'Caprover enables us to self host applications at the click of a button and our own projects too!'
 ---
 
-# Spinning up caprover locally
+# Spinning up CapRover locally
 
 _Title_: Run Caprover in a linux vm on a mac mini! in the cloud, or any box you have lying around :)
 
@@ -23,7 +23,7 @@ _Author_: Devin Reeks
 
 _Language_: English
 
-## The power of caprover
+## The power of CapRover
 
 ✅ CapRover can be used to run a private cloud
 
@@ -66,7 +66,7 @@ For this we can use Caprover.
 
 CapRover is like having your own mini-Heroku or AWS, but completely free and self-hosted! It's a Platform as a Service (PaaS) that makes deploying and managing your applications super stupid simple.
 
-There are two options for hosting caprover
+There are two options for hosting CapRover
 
 🔵 1. In the cloud. <br></br>
 
@@ -156,14 +156,14 @@ install this:
 
 ## Step four - make a volume on the vm
 
-This step is so we can persist data if and when the host machine is restarted. This step is crucial! We want caprover to remember the apps you install on it! We also want to skip verification of the app domains. This is because we will use a cloudflare tunnel to handle the https termination.
+This step is so we can persist data if and when the host machine is restarted. This step is crucial! We want CapRover to remember the apps you install on it! We also want to skip verification of the app domains. This is because we will use a cloudflare tunnel to handle the https termination.
 
 ```
   sudo mkdir /captain
   echo  "{\"skipVerifyingDomains\":\"true\"}" >  /captain/data/config-override.json
 ```
 
-## Step five - install caprover inside the linux vm
+## Step five - install CapRover inside the linux vm
 
 ```
   sudo docker run -e MAIN_NODE_IP_ADDRESS=127.0.0.1 \
@@ -196,7 +196,7 @@ sudo docker run Runs a Docker container with elevated privileges. sudo ensures t
 
 caprover/caprover Specifies the Docker image to use, in this case, the official CapRover image from Docker Hub.
 
-## Step six - Login and immediately change administrator password
+## Step six - Log in and immediately change administrator password
 
 ![image](https://dev-blog-v86e.vercel.app/static/images/caprover-login-page.png)
 
@@ -210,7 +210,7 @@ and in settings change the administrator password.
 
 ![image](https://dev-blog-v86e.vercel.app/static/images/caprover-settings-page.png)
 
-## Congratulations! Your caprover is configured to run on your local machine.
+## Congratulations! Your CapRover is configured to run on your local machine.
 
 you can now install applications, deploy your own applications!
 
@@ -228,7 +228,7 @@ Now open your favourite terminal. Currently my favourite is warp:
 https://www.warp.dev/
 ```
 
-We now want to create our tunnel. This will open our caprover instance to the world. So please go back and ensure you've set the admin password
+We now want to create our tunnel. This will open our CapRover instance to the world. So please go back and ensure you've set the admin password
 
 ```
 cloudflared login
@@ -269,7 +269,7 @@ go to
 https://captain.<RECENTLY_PURCHASED_DOMAIN>.com
 ```
 
-## Step eight - configure caprover nginx subdomains
+## Step eight - configure CapRover nginx subdomains
 
 However, our applications use subdomains in this format:
 
