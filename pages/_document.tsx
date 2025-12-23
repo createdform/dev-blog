@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 
 class MyDocument extends Document {
   render() {
@@ -31,6 +32,14 @@ class MyDocument extends Document {
           <meta name='msapplication-TileColor' content='#000000' />
           <meta name='theme-color' content='#000000' />
           <link rel='alternate' type='application/rss+xml' href='/feed.xml' />
+          <Script
+            strategy='afterInteractive'
+            src='https://cdn.peakly.com.au/widget.js'
+            data-key='pk_live_b2c92dc83004143707775c599cb500eface80b37a2c35364'
+            data-position='bottom-right'
+            data-cta='Request times'
+            data-open='true'
+          />
         </Head>
         <body className='bg-white text-black antialiased dark:bg-gray-900 dark:text-white'>
           <Main />

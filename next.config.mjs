@@ -6,14 +6,26 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://maps.googleapis.com giscus.app https://www.googletagmanager.com;
+  script-src 'self' 'unsafe-eval' 'unsafe-inline'
+    https://maps.googleapis.com
+    giscus.app
+    https://www.googletagmanager.com
+    https://96bf5589028b.ngrok-free.app
+    https://cdn.peakly.com.au;
   object-src 'none';
   style-src 'self' 'unsafe-inline';
   img-src * blob: data: https://*.devinreeks.com https://devinreeks.com;
   media-src 'none';
   connect-src *;
   font-src 'self';
-  frame-src giscus.app https://imgflip.com https://www.youtube.com https://www.youtube-nocookie.com;
+  frame-src
+    giscus.app
+    https://imgflip.com
+    https://cdn.peakly.com.au
+    https://app.peakly.com.au
+    https://www.youtube.com
+    https://96bf5589028b.ngrok-free.app
+    https://www.youtube-nocookie.com;
 `;
 
 
