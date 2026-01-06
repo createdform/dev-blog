@@ -11,7 +11,17 @@ const ContentSecurityPolicy = `
     giscus.app
     https://www.googletagmanager.com
     https://96bf5589028b.ngrok-free.app
+    http://localhost:3000
+    https://challenges.cloudflare.com
+    https://cdn.tailwindcss.com
     https://cdn.peakly.com.au;
+  script-src-elem 'self' 'unsafe-inline'
+    https://maps.googleapis.com
+    https://www.googletagmanager.com
+    https://challenges.cloudflare.com
+    https://cdn.tailwindcss.com
+    https://cdn.peakly.com.au
+    http://localhost:3000;   
   object-src 'none';
   style-src 'self' 'unsafe-inline';
   img-src * blob: data: https://*.devinreeks.com https://devinreeks.com;
@@ -23,7 +33,10 @@ const ContentSecurityPolicy = `
     https://imgflip.com
     https://cdn.peakly.com.au
     https://app.peakly.com.au
+    http://localhost:3000
     https://www.youtube.com
+    https://challenges.cloudflare.com
+    https://cdn.tailwindcss.com
     https://96bf5589028b.ngrok-free.app
     https://www.youtube-nocookie.com;
 `;
@@ -37,10 +50,6 @@ const securityHeaders = [
   {
     key: 'Referrer-Policy',
     value: 'strict-origin-when-cross-origin',
-  },
-  {
-    key: 'X-Frame-Options',
-    value: 'DENY',
   },
   {
     key: 'X-Content-Type-Options',
