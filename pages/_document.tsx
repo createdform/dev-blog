@@ -32,14 +32,14 @@ class MyDocument extends Document {
           <meta name='msapplication-TileColor' content='#000000' />
           <meta name='theme-color' content='#000000' />
           <link rel='alternate' type='application/rss+xml' href='/feed.xml' />
-          <Script
-            strategy='afterInteractive'
-            src='https://cdn.peakly.com.au/widget.js'
-            data-key='pk_live_34d5438e0b23df0ef581cdc1c0ae8f435d196c6b9c1216ef'
-            data-position='bottom-right'
-            data-cta='Request times'
-            data-open='true'
-          />
+          {/*<Script*/}
+          {/*  strategy='afterInteractive'*/}
+          {/*  src='https://cdn.peakly.com.au/widget.js'*/}
+          {/*  data-key='pk_live_34d5438e0b23df0ef581cdc1c0ae8f435d196c6b9c1216ef'*/}
+          {/*  data-position='bottom-right'*/}
+          {/*  data-cta='Request times'*/}
+          {/*  data-open='true'*/}
+          {/*/>*/}
         </Head>
         <body className='bg-white text-black antialiased dark:bg-gray-900 dark:text-white'>
           <Main />
